@@ -42,12 +42,12 @@ GATK_VariantCalling_simple
 echo "Start Job"
 
 ### ASSIGNING VARIABLES ###
-P=$(find /lustre/project/kferris/Diana_Tataru/F4_F5/3_parental_lac/* -type d \
-    | sort \
-    | awk -v line=${SLURM_ARRAY_TASK_ID} 'line==NR')
+P=$(find /lustre/project/kferris/Diana_Tataru/F4_F5/3_parental_lac/*  \
+ #   | sort \
+  #  | awk -v line=${SLURM_ARRAY_TASK_ID} 'line==NR')
 
 # returns path: /lustre/project/kferris/Diana_Tataru/F4_F5/3_parental_lac/${SAMPLE}
-SAMPLE=$(echo $P | cut -d "/" -f 9) #Retrieves sample name
+SAMPLE=$(echo $P) #Retrieves sample name
 
 ### SETTING WORKING DIRECTORY WHERE VARIANT CALLING OUTPUTS WILL GO ###
 cd /lustre/project/kferris/Diana_Tataru/F4_F5/4_parental_lacGATK_variant_calling/1_GVCF_files
