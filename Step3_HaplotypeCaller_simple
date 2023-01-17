@@ -4,7 +4,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --output=/lustre/project/kferris/Diana_Tataru/F4_F5/4_parental_lacGATK_variant_calling/output-variant-calling/var_call_%A_%a.out
 #SBATCH --error=/lustre/project/kferris/Diana_Tataru/F4_F5/4_parental_lacGATK_variant_calling/error-variant-calling/var_call_%A_%a.err
-#SBATCH --qos=x-long
+#SBATCH --qos=-long
 #SBATCH --time=14-00:00:00
 #SBATCH --nodes=1            #: Number of Nodes
 #SBATCH --ntasks-per-node=1  #: Number of Tasks per Node
