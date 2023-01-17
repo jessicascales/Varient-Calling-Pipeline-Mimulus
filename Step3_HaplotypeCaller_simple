@@ -1,6 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=HaplotypeCaller
 #SBATCH --mail-user=jscales1@tulane.edu
+#SBATCH --mail-type=ALL
 #SBATCH --output=/lustre/project/kferris/Diana_Tataru/F4_F5/4_parental_lacGATK_variant_calling/output-variant-calling/var_call_%A_%a.out
 #SBATCH --error=/lustre/project/kferris/Diana_Tataru/F4_F5/4_parental_lacGATK_variant_calling/error-variant-calling/var_call_%A_%a.err
 #SBATCH --qos=x-long
