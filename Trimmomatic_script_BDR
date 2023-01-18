@@ -1,0 +1,88 @@
+#!/bin/bash
+#SBATCH --job-name=trim_BDRreads
+#SBATCH --mail-type=ALL # Valid values: BEGIN, END, FAIL, REQUEUE and ALL.
+#SBATCH --mail-user=jscales1@tulane.edu
+#SBATCH --output=/lustre/project/kferris/UCDavis_seqdata/BDR_gatk/2_BDRfastQC/trimmomatic_output/trim_BDRreads.out
+#SBATCH --error=/lustre/project/kferris/UCDavis_seqdata/BDR_gatk/2_BDRfastQC/trimmomatic_output/trim_BDRreads.err
+#SBATCH --qos=normal
+#SBATCH --time=0-03:00:00
+#SBATCH --cpus-per-task=16   #: Cpus per Task
+#SBATCH --nodes=1            #: Number of Nodes
+#SBATCH --ntasks-per-node=1  #: Number of Tasks per Node
+
+module load anaconda3
+unset PYTHONPATH
+source activate qc_env
+
+############ Trimmomatic Script #############################
+
+
+<<LONG_COMMENT
+
+        ILLUMINACLIP:/lustre/project/kferris/UCDavis_seqdata/Transposase_Seq.fa:2:20:10\
+
+From the Trimmomatic manual example PE: Remove Illumina adapters provided in the my_adapter_file file. Initially
+Trimmomatic will look for seed matches (16 bases = default) allowing maximally 2
+mismatches. These seeds will be extended and clipped if in the case of paired end
+reads a score of 30 is reached (about 50 bases), or in the case of single ended reads a
+score of 10, (about 17 bases).
+
+In my case,  the adapter might not get to 50 bp so, a lower (20) number should work better for my reads
+
+LEADING:3  => Remove leading low quality or N bases (below quality 3)
+TRAILING:3  => Remove trailing low quality or N bases (below quality 3)
+SLIDINGWINDOW:4:20  => Scan the read with a 4-base wide sliding window, cutting when the average quality per
+base drops below 15
+MINLEN:50 => Drop reads which are less than 36 bases long after these steps
+
+All the rest of the options were left with the default values
+#for f in /luster/projects/kferris/UCDavis_seqdata/BDR_gatk/2_BDRfastQC/*_1.fq.gz
+#do
+#fin= "/lustre/projects/kferris/UCDavis_seqdata/BDR_gatk/1_BDRdata/KGF_02/KGF_02_USPD16090431-AK4191_HV53VBBXX_L3_1.fq.gz"
+#fout= "/lustre/projects/kferris/UCDavis_seqdata/BDR_gatk/test_trimmomatic_out"
+# java -jar /lustre/project/kferris/conda/conda-envs/qc_env/bin/trimmomatic PE -threads 16 -phred33 -basein $f \
+#TRIMMOMATIC=" /lustre/project/kferris/conda/conda-envs/qc_env/bin/trimmomatic"
+
+#echo "$TRIMMOMATIC PE -threads 16 -phred33 -basein $(echo ${fin}) \
+#       -baseout ${fout} \
+#       -trimlog /lustre/project/kferris/UCDavis_seqdata/BDR_gatk/2_BDRfastQC/trimmomatic_output/trimmed_minleng50_test \
+#       ILLUMINACLIP:/lustre/project/kferris/UCDavis_seqdata/Transposase_Seq.fa:2:20:10\
+#       LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20  MINLEN:50"
+
+#$TRIMMOMATIC PE -threads 16 -phred33 -basein $fin\
+#       -baseout /luster/projects/kferris/UCDavis_seqdata/BDR_gatk/test2 \
+#       -trimlog /lustre/project/kferris/UCDavis_seqdata/BDR_gatk/2_BDRfastQC/trimmomatic_output/trimmed_minleng50_test \
+#       ILLUMINACLIP:/lustre/project/kferris/UCDavis_seqdata/Transposase_Seq.fa:2:20:10\
+#       LEADING:3 TRAILING:3 SLIDINGWINDOW:4:20  MINLEN:50
+
+#done
+
+
+
+#### NAT TESTING ####
+
+f1="/lustre/project/kferris/UCDavis_seqdata/BDR_gatk/2_BDRfastQC/KGF_02_USPD16090431-AK4191_HV53VBBXX_L3_1.fq.gz"
+f2="/lustre/project/kferris/UCDavis_seqdata/BDR_gatk/2_BDRfastQC/KGF_02_USPD16090431-AK4191_HV53VBBXX_L3_2.fq.gz"
+TRIMMOMATIC=" /lustre/project/kferris/conda/conda-envs/qc_env/bin/trimmomatic"
+
+$TRIMMOMATIC  PE -threads 16 -phred33\
+                ${f1} ${f2}\
+                ${f1%%_1.fq.gz}"_filtered_1P.fq.gz" ${f1%%_1.fq.gz}"_filtered_1U.fq.gz"\
+                ${f2%%_2.fq.gz}"_filtered_2P.fq.gz" ${f2%%_2.fq.gz}"_filtered_2U.fq.gz"\
+                -trimlog /lustre/project/kferris/UCDavis_seqdata/BDR_gatk/2_BDRfastQC/trimmomatic_output/trimmed_minleng50_test \
+                ILLUMINACLIP:/lustre/project/kferris/UCDavis_seqdata/Transposase_Seq.fa:2:20:10\
+                LEADING:3 TRAILING:3 CROP:145 HEADCROP:9 SLIDINGWINDOW:4:20  MINLEN:50
+
+
+
+
+echo "trimming complete"
+
+
+
+
+
+
+# Unsetting environment
+source deactivate
+module purge #unloads all modules
