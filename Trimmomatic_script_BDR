@@ -36,6 +36,9 @@ base drops below 15
 MINLEN:50 => Drop reads which are less than 36 bases long after these steps
 
 All the rest of the options were left with the default values
+
+LONG_COMMENT
+
 #for f in /luster/projects/kferris/UCDavis_seqdata/BDR_gatk/2_BDRfastQC/*_1.fq.gz
 #do
 #fin= "/lustre/projects/kferris/UCDavis_seqdata/BDR_gatk/1_BDRdata/KGF_02/KGF_02_USPD16090431-AK4191_HV53VBBXX_L3_1.fq.gz"
