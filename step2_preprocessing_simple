@@ -34,8 +34,8 @@ R2=$(find /lustre/project/kferris/Aditi_Mahesh/1_data/cpp_parents/ \
 
 # Sample prefix from the R1/R2 files, is in the sample_names.list (ex: KGF_02.._L3)
 #This part changes based on the naming system. The user will have to modify this as needed
-SAMPLE=$(echo $R1 | cut -d "/" -f 8 | cut -d "_" -f 1-2) #Retrieves first element before "_", DT_#
-HEADER=$(echo $R1 | cut -d "/" -f 8 | cut -d "_" -f 1-2) #Retrieves first element before "_"
+SAMPLE=$(echo $R1 | cut -d "/" -f 8 | cut -d "_" -f 1-4) #Retrieves first element before "_", DT_#
+HEADER=$(echo $R1 | cut -d "/" -f 8 | cut -d "_" -f 1) #Retrieves first element before "_"
 echo "sample and header created"
 print SAMPLE
 print HEADER
