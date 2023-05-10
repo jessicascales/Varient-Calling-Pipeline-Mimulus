@@ -37,8 +37,8 @@ R2=$(find /lustre/project/kferris/Aditi_Mahesh/1_data/cpp_parents/ \
 SAMPLE=$(echo $R1 | cut -d "/" -f 8 | cut -d "_" -f 1-4) #Retrieves first element before "_", DT_#
 HEADER=$(echo $R1 | cut -d "/" -f 8 | cut -d "_" -f 1) #Retrieves first element before "_"
 echo "sample and header created"
-print SAMPLE
-print HEADER
+echo SAMPLE
+echo HEADER
 SEQID="cpp_parents" #project name and date for bam header
 REF="/lustre/project/kferris/MimulusGuttatus_reference/MguttatusTOL_551_v5.0.fa" #reference genome for the california foothills population
 THREADS=20
