@@ -23,11 +23,11 @@ echo "Start Job"
 # The following line allows us to link the elements of the array with the FW and RV read files (R1/R2).
 #the sort step should sort samples alphanumerically
 #note: find command searches recursively, grep command selects either read 1 or 2
-R1=$(find /lustre/project/kferris/Aditi_Mahesh/1_data/cpp_parents/ \
+R1=$(find /lustre/project/kferris/Aditi_Mahesh/2_readqc/ \      #location of softlinks to sequencing data
     | grep R1_001.fastq.gz \
     | sort \
     | awk -v line=${SLURM_ARRAY_TASK_ID} 'line==NR')
-R2=$(find /lustre/project/kferris/Aditi_Mahesh/1_data/cpp_parents/ \
+R2=$(find /lustre/project/kferris/Aditi_Mahesh/2_readqc/ \
     | grep R2_001.fastq.gz \
     | sort \
     | awk -v line=${SLURM_ARRAY_TASK_ID} 'line==NR')
@@ -62,7 +62,7 @@ cd /lustre/project/kferris/Aditi_Mahesh/3_preprocessing_parents/alignments_untri
 mkdir ${HEADER}  #makes a directory for each biological sample.
 
 ########## RUNNING THE ALIGNMENT ON UNTRIMMED DATA ##########
-fixmate -r flag removes unaligned reads
+#fixmate -r flag removes unaligned reads
 echo "Start Alignment"
 bwa mem -R '@RG\tID:'${SEQID}'\tSM:'${SAMPLE}'\tLB:lib1' -t ${THREADS} ${REF} \
    ${R1} ${R2} \
